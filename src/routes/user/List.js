@@ -9,7 +9,7 @@ function List({dataSource, pagination, onPageChange, onDeleteItem}) {
   const handleMenuClick = (record, e) =>{
    if (e.key === '2') {
       confirm({
-        title: `您确定要删除用户[${record.idcCode}]?`,
+        title: `您确定要删除用户[${record.realname}]?`,
         onOk() {
           onDeleteItem(record.id)
         }

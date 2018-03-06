@@ -24,7 +24,7 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(location => {
-        if (location.pathname === '/user') {
+        if (location.pathname === '/') {
           dispatch({
             type:'query'
           })
@@ -38,16 +38,11 @@ export default {
       const data = yield call(query,payload)
       if (data) {
         yield put({
-          type: 'querySuccess',
+          type: 'updateState',
           payload: {
-            list: data.result.list,
+            list: data.data,
             searchModel:payload.searchModel === undefined ? null : payload.searchModel,
             pageInfoModel:payload.pageInfoModel === undefined ? null : payload.pageInfoModel,
-            pagination: {
-              current: data.result.pageNum,
-              total: data.result.total,
-              pageSize: data.result.pageSize,
-            }
           }
         })
       }
@@ -65,27 +60,22 @@ export default {
       const data = yield call(importUser)
       yield put({type:'updateState',payload:{modalVisible:false,handleOkType:''}})
       yield put({type:'query'})
-      if(data.message === 'hasReport'){
-        window.location.href = `${baseURL}/api/user/download_report`
+      console.log(data.message)
+      if(data.message){
+        window.location.href = `${baseURL}/api/gateway/download_report?uuid=${data.message}`
       }else{
         message.success('导入成功',3)
       }
     },
     * 'export'({payload},{call,put}){
       yield call(exportUser)
-      window.location.href = `${baseURL}/api/user/exportUser`
+      window.location.href = `${baseURL}/api/user/export`
     }
   },
 
   reducers: {
     updateState(state, {payload}) {
       return {...state, ...payload}
-    },
-    querySuccess(state, {payload}) {
-      const {list, pagination, searchModel} = payload
-      return {
-        ...state,...payload,list,pagination: {...state.pagination, ...pagination,},searchModel,
-      }
     },
     showModal (state, action) {
       return {...state, ...action.payload, modalVisible: true}
