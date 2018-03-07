@@ -1,7 +1,6 @@
 import request from '../utils/request'
+import {baseURL} from '../utils/config'
 import qs from 'qs'
-
-const baseURL = 'http://localhost:8080'
 
 export async function query(payload) {
   let params = qs.stringify(payload.searchModel) + "&" + qs.stringify(payload.pageInfoModel)

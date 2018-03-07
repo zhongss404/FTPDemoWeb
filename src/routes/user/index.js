@@ -113,7 +113,7 @@ function User({location, dispatch, user, loading}) {
       </div>
     </Content>
     <Footer style={{ textAlign: 'center' }}>
-      Designed by @zhongss404
+      Designed by zhongss404 in shanghai 【CSDN:http://blog.csdn.net/zhong_csdn】 【git地址:https://github.com/zhongss404】
     </Footer>
   </Layout>
   )
